@@ -7,4 +7,4 @@ RUN apk add --update --no-progress nodejs unrar bash git mercurial && \
   rm /var/cache/apk/*
 
 WORKDIR /app
-ENTRYPOINT gradle
+ENTRYPOINT ["/bin/bash"]
