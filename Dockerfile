@@ -1,4 +1,4 @@
-FROM chickenzord/alpine-gradle
+FROM frekele/gradle
 
 MAINTAINER Timoteo Ponce <timo.slack@gmail.com>
 
