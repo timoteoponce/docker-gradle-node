@@ -3,6 +3,3 @@
 - JDK8
 - Gradle
 - Node
-- Gulp
-- Bower
-
