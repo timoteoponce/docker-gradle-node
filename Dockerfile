@@ -67,6 +67,6 @@ RUN addgroup -g 1001 node \
           && rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz \
           && apk del .build-deps-yarn
 
-RUN apk --update add --no-cache fontconfig ttf-dejavu
+RUN apk --update add --no-cache fontconfig ttf-dejavu && npm install -g gulp bower
 
 USER gradle
