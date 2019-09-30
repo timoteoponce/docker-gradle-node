@@ -1,4 +1,5 @@
-FROM gradle:4.9-jdk8-alpine
+#FROM gradle:4.9-jdk8-alpine
+FROM ringcentral/gradle
 
 ENV NODE_VERSION 8.11.4
 USER root
