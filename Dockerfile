@@ -1,23 +1,11 @@
-#FROM gradle:4.9-jdk8-alpine
-FROM ringcentral/gradle
+FROM gradle:jdk8
 
 ENV NODE_VERSION 8.11.4
 USER root
 
-RUN addgroup -g 1001 node \
-      && adduser -u 1001 -G node -s /bin/sh -D node \
-      && apk add --no-cache \
-      libstdc++ \
-      && apk add --no-cache --virtual .build-deps \
-      binutils-gold \
-      curl \
-      g++ \
-      gcc \
-      gnupg \
-      libgcc \
-      linux-headers \
-      make \
-      python \
+RUN groupadd --system --gid 1001 node \
+      && useradd --system --uid 1001 --gid node --shell /bin/sh --create-home node \
+      && apt-get update && apt-get install -y build-essential curl python \
 # gpg keys listed at https://github.com/nodejs/node#release-team
       && for key in \
         94AE36675C464D64BAFA68DD7434390BDBE9B9C5 \
@@ -43,15 +31,13 @@ RUN addgroup -g 1001 node \
         && ./configure \
         && make -j$(getconf _NPROCESSORS_ONLN) \
         && make install \
-        && apk del .build-deps \
         && cd .. \
         && rm -Rf "node-v$NODE_VERSION" \
         && rm "node-v$NODE_VERSION.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt
 
         ENV YARN_VERSION 1.6.0
 
-        RUN apk add --no-cache --virtual .build-deps-yarn curl gnupg tar \
-          && for key in \
+        RUN for key in \
           6A010C5166006599AA17F08146C2130DFD2497F5 \
           ; do \
           gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys "$key" || \
@@ -65,9 +51,8 @@ RUN addgroup -g 1001 node \
           && tar -xzf yarn-v$YARN_VERSION.tar.gz -C /opt/ \
           && ln -s /opt/yarn-v$YARN_VERSION/bin/yarn /usr/local/bin/yarn \
           && ln -s /opt/yarn-v$YARN_VERSION/bin/yarnpkg /usr/local/bin/yarnpkg \
-          && rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz \
-          && apk del .build-deps-yarn
+          && rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz 
 
-RUN apk --update add --no-cache fontconfig ttf-dejavu && npm install -g gulp bower
+RUN npm install -g gulp bower npx
 
 USER gradle
