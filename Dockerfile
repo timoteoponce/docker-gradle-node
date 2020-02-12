@@ -1,6 +1,6 @@
 FROM gradle:jdk8
 
-ENV NODE_VERSION 8.11.4
+ENV NODE_VERSION 13.8.0
 USER root
 
 RUN groupadd --system --gid 1001 node \
@@ -35,7 +35,7 @@ RUN groupadd --system --gid 1001 node \
         && rm -Rf "node-v$NODE_VERSION" \
         && rm "node-v$NODE_VERSION.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt
 
-        ENV YARN_VERSION 1.6.0
+        ENV YARN_VERSION 1.21.1
 
         RUN for key in \
           6A010C5166006599AA17F08146C2130DFD2497F5 \
