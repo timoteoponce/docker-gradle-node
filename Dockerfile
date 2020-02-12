@@ -1,6 +1,6 @@
 FROM gradle:jdk8
-RUN groupadd --gid 1000 node \
-  && useradd --uid 1000 --gid node --shell /bin/bash --create-home node
+RUN groupadd --gid 1010 node \
+  && useradd --uid 1010 --gid node --shell /bin/bash --create-home node
 
 ENV NODE_VERSION 13.8.0
 
